@@ -1,5 +1,6 @@
 const hre = require("hardhat");
 const fs = require("fs");
+const { upgrades } = require("hardhat");
 
 async function main() {
   const [deployer] = await hre.ethers.getSigners();
@@ -7,14 +8,18 @@ async function main() {
 
   const baseURI = "https://127.0.0.1/carbon-credits/metadata/";
   const initialOwner = deployer.address;
+
   const CarbonCreditToken = await hre.ethers.getContractFactory("CarbonCreditToken");
-  const contract = await CarbonCreditToken.deploy(baseURI, initialOwner);
+
+  const contract = await upgrades.deployProxy(CarbonCreditToken, [baseURI, initialOwner], {
+    initializer: "initialize",
+  });
 
   console.log("Aguardando confirmação de deploy...");
   await contract.waitForDeployment();
 
   const address = await contract.getAddress();
-  console.log("Contract deployed to:", address);
+  console.log("Contract (proxy) deployed to:", address);
 
   const deploymentInfo = {
     contract: "CarbonCreditToken",
