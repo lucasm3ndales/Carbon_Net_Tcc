@@ -74,7 +74,7 @@ contract CarbonCreditToken is
         __Ownable_init(initialOwner);
     }
 
-    function batchRegisterCarbonCredits(
+    function batchMintCarbonCredits(
         address to,
         CarbonCreditTokenData[] calldata credits
     ) external onlyOwner returns (bool, string memory) {
