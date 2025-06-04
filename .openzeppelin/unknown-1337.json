@@ -8,40 +8,24 @@
     },
     {
       "address": "0xF12b5dd4EAD5F743C6BaA640B0216200e89B60Da",
-      "txHash": "0x114493dadb7adb6c035a6bee1f38c3b41c355dab41a4d8b7ae28bf03b9ae12a5",
+      "txHash": "0x93590a5438b9ca12c8dfc547b79378d8cc556159f5176ede0bb3dc0c50614c7e",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "0ed796420f0b4d7276186ebc674bf412d115e570daeda628a8cc5a6790938f61": {
+    "706e878a517dd8cae6ffb95bc7557ed2689f76de2689a0de17e5cfe2973972c7": {
       "address": "0x8CdaF0CD259887258Bc13a92C0a6dA92698644C0",
-      "txHash": "0xfff9cd3c2434e14bf95fef8ecdd22fe2daeac2bbff59d331c48c21ba8811afc9",
+      "txHash": "0xccb60885eec6041420fbbd005f8534fc781547332d9c0e7bf0341a31999c204e",
       "layout": {
         "solcVersion": "0.8.28",
         "storage": [
           {
-            "label": "_metadata",
+            "label": "_tokenMetadata",
             "offset": 0,
             "slot": "0",
-            "type": "t_mapping(t_uint256,t_struct(CarbonCreditTokenData)8252_storage)",
+            "type": "t_mapping(t_uint256,t_struct(CarbonCreditTokenData)8219_storage)",
             "contract": "CarbonCreditToken",
-            "src": "contracts/CarbonCreditToken.sol:61"
-          },
-          {
-            "label": "_existingCreditCodes",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_mapping(t_string_memory_ptr,t_bool)",
-            "contract": "CarbonCreditToken",
-            "src": "contracts/CarbonCreditToken.sol:62"
-          },
-          {
-            "label": "_allTokenIds",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_array(t_uint256)dyn_storage",
-            "contract": "CarbonCreditToken",
-            "src": "contracts/CarbonCreditToken.sol:63"
+            "src": "contracts/CarbonCreditToken.sol:33"
           }
         ],
         "types": {
@@ -135,10 +119,6 @@
             "label": "uint64",
             "numberOfBytes": "8"
           },
-          "t_array(t_uint256)dyn_storage": {
-            "label": "uint256[]",
-            "numberOfBytes": "32"
-          },
           "t_enum(CarbonCreditStatus)8199": {
             "label": "enum CarbonCreditToken.CarbonCreditStatus",
             "members": [
@@ -151,46 +131,11 @@
             ],
             "numberOfBytes": "1"
           },
-          "t_enum(CarbonProjectStatus)8207": {
-            "label": "enum CarbonCreditToken.CarbonProjectStatus",
-            "members": [
-              "PLANNED",
-              "ACTIVE",
-              "CERTIFIED",
-              "SUSPENDED",
-              "COMPLETED",
-              "EXPIRED",
-              "CANCELLED"
-            ],
-            "numberOfBytes": "1"
-          },
-          "t_enum(CarbonProjectType)8216": {
-            "label": "enum CarbonCreditToken.CarbonProjectType",
-            "members": [
-              "REFORESTATION",
-              "FOREST_CONSERVATION",
-              "RENEWABLE_ENERGY",
-              "ENERGY_EFFICIENCY",
-              "WASTE_MANAGEMENT",
-              "CARBON_CAPTURE_AND_STORAGE",
-              "AGRICULTURE",
-              "OTHER"
-            ],
-            "numberOfBytes": "1"
-          },
-          "t_mapping(t_string_memory_ptr,t_bool)": {
-            "label": "mapping(string => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_struct(CarbonCreditTokenData)8252_storage)": {
+          "t_mapping(t_uint256,t_struct(CarbonCreditTokenData)8219_storage)": {
             "label": "mapping(uint256 => struct CarbonCreditToken.CarbonCreditTokenData)",
             "numberOfBytes": "32"
           },
-          "t_string_memory_ptr": {
-            "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_struct(CarbonCreditTokenData)8252_storage": {
+          "t_struct(CarbonCreditTokenData)8219_storage": {
             "label": "struct CarbonCreditToken.CarbonCreditTokenData",
             "members": [
               {
@@ -246,51 +191,9 @@
                 "type": "t_string_storage",
                 "offset": 0,
                 "slot": "8"
-              },
-              {
-                "label": "projectName",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "9"
-              },
-              {
-                "label": "projectLocation",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "10"
-              },
-              {
-                "label": "projectDeveloper",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "11"
-              },
-              {
-                "label": "projectCreatedAt",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "12"
-              },
-              {
-                "label": "projectUpdatedAt",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "13"
-              },
-              {
-                "label": "projectType",
-                "type": "t_enum(CarbonProjectType)8216",
-                "offset": 0,
-                "slot": "14"
-              },
-              {
-                "label": "projectStatus",
-                "type": "t_enum(CarbonProjectStatus)8207",
-                "offset": 1,
-                "slot": "14"
               }
             ],
-            "numberOfBytes": "480"
+            "numberOfBytes": "288"
           }
         },
         "namespaces": {
