@@ -7,15 +7,20 @@
       "kind": "transparent"
     },
     {
+      "address": "0x30753E4A8aad7F8597332E813735Def5dD395028",
+      "txHash": "0x4916f1dbc55b3f0d8b2ab55e70714e44083deef5bc3f5314a8165f6f3cda2d69",
+      "kind": "transparent"
+    },
+    {
       "address": "0xF12b5dd4EAD5F743C6BaA640B0216200e89B60Da",
       "txHash": "0x93590a5438b9ca12c8dfc547b79378d8cc556159f5176ede0bb3dc0c50614c7e",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "706e878a517dd8cae6ffb95bc7557ed2689f76de2689a0de17e5cfe2973972c7": {
+    "a7c53dd81b8edab994c952d9e373e5da693e90669ad14557cab0db168c0a7114": {
       "address": "0x8CdaF0CD259887258Bc13a92C0a6dA92698644C0",
-      "txHash": "0xccb60885eec6041420fbbd005f8534fc781547332d9c0e7bf0341a31999c204e",
+      "txHash": "0x95580ae1a01ea3b18e7f50d14bb9907bddd283c3863a206115241835401cd9e9",
       "layout": {
         "solcVersion": "0.8.28",
         "storage": [
@@ -23,9 +28,9 @@
             "label": "_tokenMetadata",
             "offset": 0,
             "slot": "0",
-            "type": "t_mapping(t_uint256,t_struct(CarbonCreditTokenData)8219_storage)",
+            "type": "t_mapping(t_uint256,t_struct(CarbonCreditTokenData)8211_storage)",
             "contract": "CarbonCreditToken",
-            "src": "contracts/CarbonCreditToken.sol:33"
+            "src": "contracts/CarbonCreditToken.sol:28"
           }
         ],
         "types": {
@@ -119,23 +124,11 @@
             "label": "uint64",
             "numberOfBytes": "8"
           },
-          "t_enum(CarbonCreditStatus)8199": {
-            "label": "enum CarbonCreditToken.CarbonCreditStatus",
-            "members": [
-              "PENDING_ISSUANCE",
-              "ISSUED",
-              "AVAILABLE",
-              "TRANSFERRED",
-              "RETIRED",
-              "CANCELLED"
-            ],
-            "numberOfBytes": "1"
-          },
-          "t_mapping(t_uint256,t_struct(CarbonCreditTokenData)8219_storage)": {
+          "t_mapping(t_uint256,t_struct(CarbonCreditTokenData)8211_storage)": {
             "label": "mapping(uint256 => struct CarbonCreditToken.CarbonCreditTokenData)",
             "numberOfBytes": "32"
           },
-          "t_struct(CarbonCreditTokenData)8219_storage": {
+          "t_struct(CarbonCreditTokenData)8211_storage": {
             "label": "struct CarbonCreditToken.CarbonCreditTokenData",
             "members": [
               {
@@ -158,7 +151,7 @@
               },
               {
                 "label": "status",
-                "type": "t_enum(CarbonCreditStatus)8199",
+                "type": "t_string_storage",
                 "offset": 0,
                 "slot": "3"
               },
