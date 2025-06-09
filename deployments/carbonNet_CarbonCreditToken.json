@@ -1,6 +1,6 @@
 {
   "contract": "CarbonCreditToken",
-  "address": "0xF12b5dd4EAD5F743C6BaA640B0216200e89B60Da",
+  "address": "0xa50a51c09a5c451C52BB714527E1974b686D8e77",
   "network": "carbonNet",
   "baseURI": "https://127.0.0.1/carbon-credits/metadata/"
 }

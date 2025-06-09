@@ -11,24 +11,22 @@ contract CarbonCreditToken is
     ERC1155Upgradeable,
     OwnableUpgradeable
 {
-    using Strings for uint256;
-
     struct CarbonCreditTokenData {
         string creditCode;
-        uint256 vintageYear;
-        uint256 tonCO2Quantity;
+        uint32 vintageYear;
+        uint32 tonCO2Quantity;
         string status;
         string ownerName;
         string ownerDocument;
-        uint256 createdAt;
-        uint256 updatedAt;
+        uint64 createdAt;
+        uint64 updatedAt;
         string projectCode;
     }
 
     mapping(uint256 => CarbonCreditTokenData) private _tokenMetadata;
 
     event CarbonCreditUpdates(
-        address operator,
+        address indexed operator,
         string func,
         uint256[] tokenIds,
         string[] creditCodes
@@ -74,21 +72,17 @@ contract CarbonCreditToken is
 
             if (bytes(existing.creditCode).length == 0) {
                 CarbonCreditTokenData memory newData = data;
-                newData.createdAt = block.timestamp;
-                newData.updatedAt = block.timestamp;
+                newData.createdAt = uint64(block.timestamp);
+                newData.updatedAt = uint64(block.timestamp);
                 _tokenMetadata[tokenId] = newData;
                 _mint(to, tokenId, 1, "");
             } else {
-                require(
-                    _validStatusForUpdate(existing.status),
-                    "Invalid status"
-                );
                 existing.vintageYear = data.vintageYear;
                 existing.tonCO2Quantity = data.tonCO2Quantity;
                 existing.status = data.status;
                 existing.ownerName = data.ownerName;
                 existing.ownerDocument = data.ownerDocument;
-                existing.updatedAt = block.timestamp;
+                existing.updatedAt = uint64(block.timestamp);
                 existing.projectCode = data.projectCode;
             }
             ids[i] = tokenId;
@@ -101,24 +95,36 @@ contract CarbonCreditToken is
 
     function getCarbonCredit(
         string calldata creditCode
-    ) external view returns (CarbonCreditTokenData memory) {
+    )
+        external
+        view
+        returns (
+            string memory creditCodeOut,
+            uint32 vintageYear,
+            uint32 tonCO2Quantity,
+            string memory status,
+            string memory ownerName,
+            string memory ownerDocument,
+            uint64 createdAt,
+            uint64 updatedAt,
+            string memory projectCode
+        )
+    {
         uint256 tokenId = uint256(keccak256(abi.encodePacked(creditCode)));
-        require(
-            bytes(_tokenMetadata[tokenId].creditCode).length > 0,
-            "Token not exist"
-        );
-        return _tokenMetadata[tokenId];
-    }
+        CarbonCreditTokenData storage data = _tokenMetadata[tokenId];
+        require(bytes(data.creditCode).length > 0, "Token not exist");
 
-    function uri(uint256 tokenId) public view override returns (string memory) {
-        return
-            string(
-                abi.encodePacked(
-                    super.uri(tokenId),
-                    Strings.toHexString(tokenId, 32),
-                    ".json"
-                )
-            );
+        return (
+            data.creditCode,
+            data.vintageYear,
+            data.tonCO2Quantity,
+            data.status,
+            data.ownerName,
+            data.ownerDocument,
+            data.createdAt,
+            data.updatedAt,
+            data.projectCode
+        );
     }
 
     function _batchUpdateStatus(
@@ -140,7 +146,7 @@ contract CarbonCreditToken is
 
             if (_validStatusForUpdate(data.status)) {
                 data.status = newStatus;
-                data.updatedAt = block.timestamp;
+                data.updatedAt = uint64(block.timestamp);
                 ids[i] = tokenId;
                 values[i] = 1;
             }
@@ -155,7 +161,7 @@ contract CarbonCreditToken is
         address from,
         address to,
         string[] calldata creditCodes
-    ) external onlyOwner returns (bool, string memory) {
+    ) external returns (bool, string memory) {
         require(to != address(0), "Invalid recipient");
         require(creditCodes.length > 0, "No credits");
         require(
@@ -177,7 +183,7 @@ contract CarbonCreditToken is
 
             _safeTransferFrom(from, to, tokenId, 1, "");
             data.status = "TRANSFERRED";
-            data.updatedAt = block.timestamp;
+            data.updatedAt = uint64(block.timestamp);
 
             ids[i] = tokenId;
             values[i] = 1;
@@ -228,22 +234,48 @@ contract CarbonCreditToken is
 
     function batchGetCarbonCredits(
         string[] calldata creditCodes
-    ) external view returns (CarbonCreditTokenData[] memory) {
-        require(creditCodes.length > 0, "No credits");
-        CarbonCreditTokenData[] memory credits = new CarbonCreditTokenData[](
-            creditCodes.length
-        );
+    )
+        external
+        view
+        returns (
+            string[] memory creditCodesOut,
+            uint32[] memory vintageYears,
+            uint32[] memory tonCO2Quantities,
+            string[] memory statuses,
+            string[] memory ownerNames,
+            string[] memory ownerDocuments,
+            uint64[] memory createdAts,
+            uint64[] memory updatedAts,
+            string[] memory projectCodes
+        )
+    {
+        uint256 length = creditCodes.length;
+        creditCodesOut = new string[](length);
+        vintageYears = new uint32[](length);
+        tonCO2Quantities = new uint32[](length);
+        statuses = new string[](length);
+        ownerNames = new string[](length);
+        ownerDocuments = new string[](length);
+        createdAts = new uint64[](length);
+        updatedAts = new uint64[](length);
+        projectCodes = new string[](length);
 
-        for (uint256 i = 0; i < creditCodes.length; i++) {
+        for (uint256 i = 0; i < length; i++) {
             uint256 tokenId = uint256(
                 keccak256(abi.encodePacked(creditCodes[i]))
             );
-            require(
-                bytes(_tokenMetadata[tokenId].creditCode).length > 0,
-                "Token not exist"
-            );
-            credits[i] = _tokenMetadata[tokenId];
+            CarbonCreditTokenData storage data = _tokenMetadata[tokenId];
+            require(bytes(data.creditCode).length > 0, "Token not exist");
+
+            creditCodesOut[i] = data.creditCode;
+            vintageYears[i] = data.vintageYear;
+            tonCO2Quantities[i] = data.tonCO2Quantity;
+            statuses[i] = data.status;
+            ownerNames[i] = data.ownerName;
+            ownerDocuments[i] = data.ownerDocument;
+            createdAts[i] = data.createdAt;
+            updatedAts[i] = data.updatedAt;
+            projectCodes[i] = data.projectCode;
         }
-        return credits;
     }
 }
