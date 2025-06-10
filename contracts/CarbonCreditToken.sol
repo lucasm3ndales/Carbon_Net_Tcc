@@ -166,7 +166,7 @@ contract CarbonCreditToken is
         require(creditCodes.length > 0, "No credits");
         require(
             from == msg.sender || isApprovedForAll(from, msg.sender),
-            "Not owner/approved"
+            "Not owner or approved"
         );
 
         uint256[] memory ids = new uint256[](creditCodes.length);
@@ -277,5 +277,14 @@ contract CarbonCreditToken is
             updatedAts[i] = data.updatedAt;
             projectCodes[i] = data.projectCode;
         }
+    }
+
+    function balanceOf(
+        address account,
+        string calldata creditCode
+    ) public view returns (uint256) {
+        require(account != address(0), "Balance query for zero address");
+        uint256 tokenId = uint256(keccak256(abi.encodePacked(creditCode)));
+        return super.balanceOf(account, tokenId);
     }
 }
