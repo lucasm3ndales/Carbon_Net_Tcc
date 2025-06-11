@@ -160,7 +160,9 @@ contract CarbonCreditToken is
     function batchTransferCarbonCredits(
         address from,
         address to,
-        string[] calldata creditCodes
+        string[] calldata creditCodes,
+        string calldata ownerName,
+        string calldata ownerDocument
     ) external returns (bool, string memory) {
         require(to != address(0), "Invalid recipient");
         require(creditCodes.length > 0, "No credits");
@@ -184,6 +186,8 @@ contract CarbonCreditToken is
             _safeTransferFrom(from, to, tokenId, 1, "");
             data.status = "TRANSFERRED";
             data.updatedAt = uint64(block.timestamp);
+            data.ownerName = ownerName;
+            data.ownerDocument = ownerDocument;
 
             ids[i] = tokenId;
             values[i] = 1;
