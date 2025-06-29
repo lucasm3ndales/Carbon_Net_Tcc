@@ -44,3 +44,6 @@ main().catch((error) => {
   console.error("Erro no deploy:", error);
   process.exitCode = 1;
 });
+
+
+

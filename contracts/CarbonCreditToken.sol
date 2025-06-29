@@ -68,6 +68,7 @@ contract CarbonCreditToken is
             uint256 tokenId = uint256(
                 keccak256(abi.encodePacked(data.creditCode))
             );
+
             CarbonCreditTokenData storage existing = _tokenMetadata[tokenId];
 
             if (bytes(existing.creditCode).length == 0) {
@@ -83,14 +84,12 @@ contract CarbonCreditToken is
                 existing.ownerName = data.ownerName;
                 existing.ownerDocument = data.ownerDocument;
                 existing.updatedAt = uint64(block.timestamp);
-                existing.projectCode = data.projectCode;
             }
             ids[i] = tokenId;
             values[i] = 1;
         }
 
-        emit TransferBatch(msg.sender, address(0), to, ids, values);
-        return (true, "Batch processed");
+        return (true, "Minted");
     }
 
     function getCarbonCredit(
@@ -152,7 +151,6 @@ contract CarbonCreditToken is
             }
         }
 
-        emit TransferBatch(msg.sender, address(0), address(0), ids, values);
         emit CarbonCreditUpdates(msg.sender, funcName, ids, creditCodes);
         return (true, "Batch status updated");
     }
@@ -193,7 +191,6 @@ contract CarbonCreditToken is
             values[i] = 1;
         }
 
-        emit TransferBatch(msg.sender, from, to, ids, values);
         emit CarbonCreditUpdates(
             msg.sender,
             "batchTransferCarbonCredits",
